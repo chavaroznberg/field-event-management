@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <!-- Enforced globally so no individual project can accidentally disable these. -->
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <!-- Treat nullable warnings as errors to enforce correctness from the start. -->
+    <WarningsAsErrors>nullable</WarningsAsErrors>
+  </PropertyGroup>
+</Project>

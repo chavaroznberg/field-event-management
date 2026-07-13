@@ -1,0 +1,45 @@
+<div class="container">
+  <header>
+    <h1>Field Event Dispatcher</h1>
+    <nav style="font-size:0.85rem">
+      <a routerLink="/">Dispatcher</a> |
+      <a routerLink="/technician">Technician</a>
+    </nav>
+    <div [class]="'status-badge status-' + connectionStatus()">
+      <span class="dot"></span>{{ statusLabel() }}
+    </div>
+  </header>
+
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  }
+
+  <table>
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Source</th>
+        <th>Title</th>
+        <th>Location</th>
+        <th>Priority</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (ev of events(); track ev.id) {
+        <tr>
+          <td>{{ formatTime(ev.occurredAt) }}</td>
+          <td>{{ ev.sourceId }}</td>
+          <td>{{ ev.title }}</td>
+          <td>{{ ev.location }}</td>
+          <td [class]="'priority-' + ev.priority.toLowerCase()">{{ ev.priority }}</td>
+          <td>{{ ev.status }}</td>
+        </tr>
+      } @empty {
+        <tr><td colspan="6" style="text-align:center;padding:20px;">No events yet.</td></tr>
+      }
+    </tbody>
+  </table>
+
+  <router-outlet />
+</div>

@@ -1,0 +1,39 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: sans-serif; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 16px; }
+
+header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+h1 { margin: 0; font-size: 1.5rem; }
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  background: #eee;
+}
+.dot { width: 9px; height: 9px; border-radius: 50%; background: grey; flex-shrink: 0; }
+.status-connected .dot { background: #22c55e; }
+.status-connecting .dot,
+.status-reconnecting .dot { background: #f59e0b; }
+.status-disconnected .dot { background: #ef4444; }
+
+.error {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 4px;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+th, td { padding: 8px 12px; border: 1px solid #e5e7eb; text-align: left; }
+th { background: #f3f4f6; font-weight: 600; }
+tr:nth-child(even) { background: #fafafa; }
+
+.priority-high { color: #dc2626; font-weight: 700; }
+.priority-medium { color: #d97706; font-weight: 600; }
+.priority-low { color: #16a34a; }

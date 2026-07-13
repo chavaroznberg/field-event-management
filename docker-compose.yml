@@ -1,0 +1,31 @@
+version: "3.9"
+
+# Phase 2: SQL Server only.
+# Backend and Agent containers are added in Phase 5 once configuration is stable.
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: field-events-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      # Set SA_PASSWORD via environment variable or .env file — never commit a real password here.
+      SA_PASSWORD: "${SQL_SA_PASSWORD:?SQL_SA_PASSWORD is required}"
+      MSSQL_PID: Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P $$SA_PASSWORD -Q 'SELECT 1' -No -C || exit 1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  sqlserver-data:

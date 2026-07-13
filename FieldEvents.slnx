@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/agent/">
+    <Project Path="src/agent/FieldEvents.Agent/FieldEvents.Agent.csproj" />
+  </Folder>
+  <Folder Name="/src/backend/">
+    <Project Path="src/backend/FieldEvents.Api/FieldEvents.Api.csproj" />
+    <Project Path="src/backend/FieldEvents.Application/FieldEvents.Application.csproj" />
+    <Project Path="src/backend/FieldEvents.Domain/FieldEvents.Domain.csproj" />
+    <Project Path="src/backend/FieldEvents.Infrastructure/FieldEvents.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FieldEvents.Agent.Tests/FieldEvents.Agent.Tests.csproj" />
+    <Project Path="tests/FieldEvents.Domain.Tests/FieldEvents.Domain.Tests.csproj" />
+    <Project Path="tests/FieldEvents.IntegrationTests/FieldEvents.IntegrationTests.csproj" />
+  </Folder>
+</Solution>

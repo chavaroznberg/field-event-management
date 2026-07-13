@@ -1,0 +1,82 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.db
+*.db-shm
+*.db-wal
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+!.nuget/NuGet.Config
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# EF Core migrations snapshot (keep migrations, ignore designer files auto-generated per dev)
+# Keep: Migrations/*.cs
+# Ignore: nothing here — migrations are committed
+
+# User secrets and environment files (never commit)
+**/appsettings.*.local.json
+secrets.json
+.env
+.env.*
+!.env.example
+
+# SQLite agent database (dev artifact, not source)
+*.db
+*.db-shm
+*.db-wal
+!tests/**/*.db
+
+# Angular
+node_modules/
+dist/
+.angular/
+src/frontend/field-events-ui/.angular/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Docker volumes
+docker-data/
+
+# Certificates
+*.pfx
+*.pem
+*.cer
+*.crt
+*.key

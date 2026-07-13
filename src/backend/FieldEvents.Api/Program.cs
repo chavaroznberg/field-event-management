@@ -2,6 +2,7 @@ using FieldEvents.Api.Hubs;
 using FieldEvents.Api.Notifications;
 using FieldEvents.Application.Interfaces;
 using FieldEvents.Infrastructure;
+using FieldEvents.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,15 @@ builder.Services.AddInfrastructure(connectionString);
 builder.Services.AddScoped<IEventNotificationService, SignalREventNotificationService>();
 
 var app = builder.Build();
+
+// SQLite local-dev: create schema from EF Core model (no migration needed).
+// SQL Server production: schema managed by dotnet ef database update.
+if (connectionString.StartsWith("Data Source=", StringComparison.OrdinalIgnoreCase))
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<FieldEventsDbContext>();
+    await db.Database.EnsureCreatedAsync();
+}
 
 app.UseExceptionHandler();
 app.UseStatusCodePages();

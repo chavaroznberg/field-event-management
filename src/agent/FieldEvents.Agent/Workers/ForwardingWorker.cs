@@ -68,14 +68,14 @@ public sealed class ForwardingWorker : BackgroundService
 
         var now = DateTimeOffset.UtcNow;
 
-        // EF Core SQLite cannot translate DateTimeOffset comparisons in SQL.
-        // The agent queue is small, so filtering NextRetryAt client-side is acceptable.
+        // EF Core SQLite cannot translate DateTimeOffset comparisons or ordering in SQL.
+        // The agent queue is small, so ordering and filtering client-side is acceptable.
         var candidates = await db.OutboxMessages
             .Where(m => m.Status == OutboxStatus.Pending && m.RetryCount < MaxRetries)
-            .OrderBy(m => m.CreatedAt)
             .ToListAsync(ct);
 
         var pending = candidates
+            .OrderBy(m => m.CreatedAt)
             .Where(m => m.NextRetryAt <= now)
             .Take(BatchSize)
             .ToList();

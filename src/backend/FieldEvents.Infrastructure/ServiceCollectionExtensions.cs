@@ -12,10 +12,19 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         string connectionString)
     {
+        // Local-dev shortcut: a connection string starting with "Data Source=" is SQLite.
+        // Production always uses SQL Server (the default branch).
+        var isSqlite = connectionString.StartsWith("Data Source=", StringComparison.OrdinalIgnoreCase);
+
         services.AddDbContext<FieldEventsDbContext>(options =>
-            options.UseSqlServer(
-                connectionString,
-                sql => sql.MigrationsAssembly(typeof(FieldEventsDbContext).Assembly.FullName)));
+        {
+            if (isSqlite)
+                options.UseSqlite(connectionString);
+            else
+                options.UseSqlServer(
+                    connectionString,
+                    sql => sql.MigrationsAssembly(typeof(FieldEventsDbContext).Assembly.FullName));
+        });
 
         services.AddScoped<IIngestEventUseCase, IngestEventUseCase>();
         services.AddScoped<IGetRecentEventsUseCase, GetRecentEventsUseCase>();

@@ -13,13 +13,17 @@ public sealed class GetRecentEventsUseCase : IGetRecentEventsUseCase
 
     public async Task<IReadOnlyList<IngestEventResponse>> ExecuteAsync(CancellationToken ct = default)
     {
-        var entities = await _db.FieldEvents
-            .AsNoTracking()
-            .OrderByDescending(e => e.CreatedAt)
-            .Take(100)
-            .ToListAsync(ct);
+        // SQLite (local-dev fallback) cannot translate DateTimeOffset ordering in SQL.
+        // For SQL Server, push OrderBy into SQL so Take(100) returns the 100 most recent.
+        // Client-side sort ensures correct ordering in both cases.
+        IQueryable<Domain.Aggregates.FieldEvent> query = _db.FieldEvents.AsNoTracking();
+        if (_db.Database.IsSqlServer())
+            query = query.OrderByDescending(e => e.CreatedAt);
+
+        var entities = await query.Take(100).ToListAsync(ct);
 
         return entities
+            .OrderByDescending(e => e.CreatedAt)
             .Select(e => new IngestEventResponse(
                 e.Id,
                 e.ExternalEventId,

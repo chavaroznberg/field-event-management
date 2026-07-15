@@ -2,6 +2,7 @@
 
 A take-home assignment demonstrating clean architecture, real-time communication,
 reliability, security, and testability using .NET 10 and Angular 19.
+I used the AI ​​tool: Cloud Code with GPT
 
 ---
 
